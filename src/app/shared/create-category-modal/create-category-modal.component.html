@@ -1,0 +1,19 @@
+<div class="modal-overlay">
+    <div class="modal">
+        <h2>Nueva Categoría</h2>
+        <form [formGroup]="createCategoryForm" (ngSubmit)="onSubmit()" >
+            <div class="form-group">
+                <label class="form-label required"
+                    for="category-name">Nombre de la categoría</label>
+                <input class="form-control" id="category-name" formControlName="name"
+                    required />
+            </div>
+
+            <div class="form-actions">
+                <button [disabled]="createCategoryForm.invalid" type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary"
+                    (click)="close()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
