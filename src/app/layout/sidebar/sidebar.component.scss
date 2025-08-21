@@ -1,56 +1,82 @@
 .sidebar {
-    width: 260px;
-    height: 100vh;
-    background-color: #2d3748;
-    color: white;
-    position: fixed;
-    z-index: 10;
+  width: 260px;
+  height: 100vh;
+  background-color: #2d3748;
+  color: white;
+  position: fixed;
+  z-index: 10;
+
+  display: flex;              /* ✅ flexbox */
+  flex-direction: column;     /* items en columna */
+  justify-content: space-between; /* espacio entre arriba y abajo */
 }
 
 .logo {
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 h2 {
-    font-size: 24px;
-    margin-bottom: 5px;
+  font-size: 24px;
+  margin-bottom: 5px;
 }
 
 .nav-menu {
-    padding: 20px 0;
+  padding: 20px 0;
+  flex-grow: 1; /* ocupa el espacio central */
 }
 
 .nav-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
 }
 
 .nav-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .nav-item.active {
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    border-left-color: #4299e1;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-left-color: #4299e1;
 }
 
 .nav-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 12px;
-    fill: currentColor;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  fill: currentColor;
 }
 
 .disabled {
   opacity: 0.5;
   pointer-events: none;
   user-select: none;
+}
+
+.logout-section {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #5a5b5f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #a33838;
 }

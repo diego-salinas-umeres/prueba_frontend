@@ -1,99 +1,118 @@
-<div class="action-bar">
-  <button class="btn btn-primary">
-    Agregar Producto
-  </button>
-  <button class="btn btn-primary">
-    Agregar Categoría
-  </button>
+<div *appAdminOnly class="action-bar">
+    <button class="btn btn-primary" (click)="openCreateProductModal()">
+        Agregar Producto
+    </button>
+    <button class="btn btn-primary">
+        Agregar Categoría
+    </button>
 </div>
 
 <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
-  <div class="filters-section">
-    <div class="filters-header">
-      <h3 class="filters-title">Filtros de Búsqueda</h3>
-    </div>
+    <div class="filters-section">
+        <div class="filters-header">
+            <h3 class="filters-title">Filtros de Búsqueda</h3>
+        </div>
 
-    <div class="filters-content" id="filters-content">
-      <div class="filter-group">
-        <label class="filter-label">Nombre</label>
-        <input type="text" class="filter-input"
-          placeholder="Buscar por descripción..." id="name"
-          formControlName="name">
-      </div>
+        <div class="filters-content" id="filters-content">
+            <div class="filter-group">
+                <label class="filter-label">Nombre</label>
+                <input type="text" class="filter-input"
+                    placeholder="Buscar por descripción..." id="name"
+                    formControlName="name">
+            </div>
 
-      <div class="filter-group">
-        <label class="filter-label">Categoría</label>
-        <input type="text" class="filter-input"
-          placeholder="Buscar por categoría..."
-          id="category" formControlName="category">
-      </div>
-    </div>
+            <div class="filter-group">
+                <label class="filter-label">Categoría</label>
+                <input type="text" class="filter-input"
+                    placeholder="Buscar por categoría..."
+                    id="category" formControlName="category">
+            </div>
+        </div>
 
-    <div class="filters-actions">
-      <button type="submit" class="btn btn-primary">Aplicar
-        Filtros</button>
+        <div class="filters-actions">
+            <button type="submit" class="btn btn-primary">Aplicar
+                Filtros</button>
+        </div>
     </div>
-  </div>
 </form>
 
 <div class="pagination-controls mt-3">
-  <button class="btn btn-secondary me-2"
-          (click)="prevPage()"
-          [disabled]="currentPage === 0">
-    Anterior
-  </button>
+    <button class="btn btn-secondary me-2"
+        (click)="prevPage()"
+        [disabled]="currentPage === 0">
+        Anterior
+    </button>
 
-  <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+    <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
 
-  <button class="btn btn-secondary ms-2"
-          (click)="nextPage()"
-          [disabled]="currentPage + 1 >= totalPages">
-    Siguiente
-  </button>
+    <button class="btn btn-secondary ms-2"
+        (click)="nextPage()"
+        [disabled]="currentPage + 1 >= totalPages">
+        Siguiente
+    </button>
 </div>
 <div class="table-container no-scrollbar">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Stock</th>
-        <th>Categoría</th>
-        <th>Precio(S/)</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody class="table-body">
-      <tr *ngFor="let product of products">
-        <td>{{ product.name }}</td>
-        <td>{{ product.quantity}}</td>
-        <td>{{ product.categoryName }}</td>
-        <td>{{ product.price }}</td>
-        <td class="actions-cell">
-          <button type="button" class="action-btn btn-view" title="Ver detalles"
-            >
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-              <path fill-rule="evenodd"
-                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </button>
-          <button type="button" class="action-btn btn-edit"
-            title="Editar">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-            </svg>
-          </button>
-          <button type="button" class="action-btn btn-disable"
-            title="Deshabilitar">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-              <path fill-rule="evenodd"
-                d="m6.72 5.66 11.62 11.62A8.25 8.25 0 0 0 6.72 5.66Zm10.56 12.68L5.66 6.72a8.25 8.25 0 0 0 11.62 11.62ZM5.105 5.106c3.807-3.808 9.98-3.808 13.788 0 3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788Z"
-                clip-rule="evenodd" />
-            </svg>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Stock</th>
+                <th>Categoría</th>
+                <th>Precio(S/)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <tr *ngFor="let product of products">
+                <td>{{ product.name }}</td>
+                <td>{{ product.quantity}}</td>
+                <td>{{ product.categoryName }}</td>
+                <td>{{ product.price }}</td>
+                <td class="actions-cell">
+                    <button type="button" class="action-btn btn-view"
+                        title="Ver detalles">
+                        <svg width="16" height="16" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd"
+                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </button>
+                    <button *appAdminOnly type="button" class="action-btn btn-edit"
+                        title="Editar">
+                        <svg width="16" height="16" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                    </button>
+                    <button *appAdminOnly type="button" class="action-btn btn-disable"
+                        title="Deshabilitar">
+                        <svg width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="m6.72 5.66 11.62 11.62A8.25 8.25 0 0 0 6.72 5.66Zm10.56 12.68L5.66 6.72a8.25 8.25 0 0 0 11.62 11.62ZM5.105 5.106c3.807-3.808 9.98-3.808 13.788 0 3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button type="button" class="action-btn btn-low-stock"
+                        title="Notificar stock bajo">
+                        <svg width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+                        </svg>
+
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+<app-create-product-modal
+    *ngIf="isCreateProductModalOpen"
+    [categories]="this.categories"
+    (closed)="isCreateProductModalOpen = false"
+    (createProductEvent)="createProduct($event)">
+</app-create-product-modal>

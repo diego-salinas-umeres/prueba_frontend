@@ -2,28 +2,35 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth-service/auth.service';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../../../core/services/product-service/product.service';
-import { Product } from '../../../../core/models/product.model';
+import { ProductCreateRequest, ProductPaginated } from '../../../../core/models/product.model';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CreateProductModalComponent } from '../../../../shared/create-product-modal/create-product-modal.component';
+import { Category } from '../../../../core/models/category.model';
+import { CategoryService } from '../../../../core/services/category-service/category.service';
+import { AdminOnlyDirective } from '../../../../core/directives/admin-only.directive';
 
 @Component({
   selector: 'app-inventory-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CreateProductModalComponent, AdminOnlyDirective],
   templateUrl: './inventory-page.component.html',
   styleUrl: './inventory-page.component.scss'
 })
 export class InventoryPageComponent implements OnInit {
   filtersForm!: FormGroup;
-  products: Product[] = [];
+  products: ProductPaginated[] = [];
   totalElements = 0;
   currentPage = 0;
   pageSize = 25;
   totalPages = 0;
+  isCreateProductModalOpen: boolean = false;
+  categories: Category[] = [];
 
   constructor(
     private authService: AuthService,
     private productService: ProductService,
     private fb: FormBuilder,
+    private categoryService: CategoryService
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +41,7 @@ export class InventoryPageComponent implements OnInit {
     })
 
     this.loadProducts();
+    this.loadCategories();
 
     const role = this.authService.getUserRole();
     if (role === 'ADMIN') {
@@ -59,6 +67,13 @@ export class InventoryPageComponent implements OnInit {
     });
   }
 
+  loadCategories():void {
+    this.categoryService.getAllCategories().subscribe({
+      next: (res) => this.categories = res,
+      error: (err) => console.log('Something went wrong...')
+    })
+  }
+
   applyFilters(): void {
     this.loadProducts(0);
   }
@@ -76,5 +91,24 @@ export class InventoryPageComponent implements OnInit {
   prevPage(): void {
     this.goToPage(this.currentPage - 1);
   }
+
+  openCreateProductModal() {
+    this.isCreateProductModalOpen = true;
+  }
+
+  closeCreateProductModal() {
+    this.isCreateProductModalOpen = false;
+  }
+
+createProduct(newProduct: ProductCreateRequest) {
+  this.productService.createProduct(newProduct).subscribe({
+    next: (res) => {
+      console.log('Producto creado', res);
+    },
+    error: (err) => {
+      console.error('Error al crear producto', err);
+    }
+  });
+}
 
 }

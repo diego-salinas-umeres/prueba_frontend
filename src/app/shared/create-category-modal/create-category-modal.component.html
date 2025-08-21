@@ -1,0 +1,36 @@
+<div class="modal-overlay">
+    <div class="modal">
+        <h2>Nueva Producto</h2>
+        <form [formGroup]="createProductForm" (ngSubmit)="onSubmit()" >
+            <div class="form-group">
+                <label class="form-label required"
+                    for="product-name">Nombre del producto</label>
+                <input class="form-control" id="product-name" formControlName="name"
+                    required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label required"
+                    for="product-category">Categoría</label>
+                <input class="form-control" id="product-category" formControlName="category"
+                    required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="quantity">Stock</label>
+                <input class="form-control" id="quantity" formControlName="quantity" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="quantity">Precio</label>
+                <input class="form-control" id="quantity" formControlName="quantity" />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary"
+                    (click)="close()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -4,17 +4,24 @@
         <p>Control total de tus productos</p>
     </div>
     <div class="nav-menu">
-        <a [routerLink]="['/dashboard']" class="nav-item">
+        <a [routerLink]="['/dashboard']" class="nav-item disabled">
             Dashboard
         </a>
         <a [routerLink]="['/inventory']" class="nav-item">
             Inventario
         </a>
-        <a [routerLink]="['/']" class="nav-item disabled">
+        <a [routerLink]="['/reports']" class="nav-item">
             Reportes
         </a>
-        <a [routerLink]="['/']" class="nav-item">
+        <a [routerLink]="['/']" class="nav-item disabled">
             Usuarios
         </a>
     </div>
+
+    <div class="logout-section">
+    <button class="logout-btn" (click)="onLogout()">
+      Cerrar sesión...
+    </button>
+  </div>
+
 </div>
