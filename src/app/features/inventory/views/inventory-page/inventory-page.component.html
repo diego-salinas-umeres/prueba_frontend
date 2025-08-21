@@ -2,7 +2,9 @@
     <button class="btn btn-primary" (click)="openCreateProductModal()">
         Agregar Producto
     </button>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary"
+    (click)="openCreateCategoryModal()"
+    >
         Agregar Categoría
     </button>
 </div>
@@ -116,3 +118,12 @@
     (closed)="isCreateProductModalOpen = false"
     (createProductEvent)="createProduct($event)">
 </app-create-product-modal>
+
+<app-create-category-modal
+    *ngIf="isCreateCategoryModalOpen"
+    (closed)="isCreateCategoryModalOpen = false"
+    (createCategoryEvent)="createCategory($event)"
+    >
+    
+
+</app-create-category-modal>

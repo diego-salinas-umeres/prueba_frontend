@@ -18,7 +18,7 @@ export class CreateProductModalComponent {
   @Input() categories: Category[] = [];
 
   createProductForm!: FormGroup;
-  
+
 
   constructor(
     private fb: FormBuilder
@@ -26,11 +26,19 @@ export class CreateProductModalComponent {
 
   ngOnInit(): void {
     this.createProductForm = this.fb.group({
-      name: [null, Validators.required],
+      name: [null, [Validators.required, Validators.minLength(3)]],
       category: [null, Validators.required],
-      quantity: [null],
-      price: [null],
-      description: [null]
+      quantity: [null, [
+        Validators.required,
+        Validators.min(0),
+        Validators.pattern("^[0-9]*$")
+      ]],
+      price: [null, [
+        Validators.required,
+        Validators.min(0),
+        Validators.pattern("^[0-9]+(\\.[0-9]{1,2})?$")
+      ]],
+      description: [null, Validators.maxLength(250)]
     })
   }
 

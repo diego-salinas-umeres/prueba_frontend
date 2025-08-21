@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { UserRegisterRequest, UserRegisterResponse, UserLoginRequest, UserLoginResponse } from '../../models/user.model';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';

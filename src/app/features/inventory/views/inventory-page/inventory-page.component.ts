@@ -5,14 +5,15 @@ import { ProductService } from '../../../../core/services/product-service/produc
 import { ProductCreateRequest, ProductPaginated } from '../../../../core/models/product.model';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreateProductModalComponent } from '../../../../shared/create-product-modal/create-product-modal.component';
-import { Category } from '../../../../core/models/category.model';
+import { Category, CategoryCreateRequest } from '../../../../core/models/category.model';
 import { CategoryService } from '../../../../core/services/category-service/category.service';
 import { AdminOnlyDirective } from '../../../../core/directives/admin-only.directive';
+import { CreateCategoryModalComponent } from '../../../../shared/create-category-modal/create-category-modal.component';
 
 @Component({
   selector: 'app-inventory-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CreateProductModalComponent, AdminOnlyDirective],
+  imports: [CommonModule, ReactiveFormsModule, CreateProductModalComponent, AdminOnlyDirective, CreateCategoryModalComponent],
   templateUrl: './inventory-page.component.html',
   styleUrl: './inventory-page.component.scss'
 })
@@ -25,6 +26,7 @@ export class InventoryPageComponent implements OnInit {
   totalPages = 0;
   isCreateProductModalOpen: boolean = false;
   categories: Category[] = [];
+  isCreateCategoryModalOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -96,6 +98,10 @@ export class InventoryPageComponent implements OnInit {
     this.isCreateProductModalOpen = true;
   }
 
+   openCreateCategoryModal() {
+    this.isCreateCategoryModalOpen = true;
+  }
+
   closeCreateProductModal() {
     this.isCreateProductModalOpen = false;
   }
@@ -104,11 +110,24 @@ createProduct(newProduct: ProductCreateRequest) {
   this.productService.createProduct(newProduct).subscribe({
     next: (res) => {
       console.log('Producto creado', res);
+      this.loadProducts();
     },
     error: (err) => {
       console.error('Error al crear producto', err);
     }
   });
+}
+
+createCategory(newCategory: CategoryCreateRequest){
+  this.categoryService.createCategory(newCategory).subscribe({
+    next: (res) =>{
+      this.categories = [...this.categories, res]
+      console.log('Categoría creada...', res)
+    },
+    error: (err) => {
+      console.error('Something went wrong...')
+    }
+  })
 }
 
 }

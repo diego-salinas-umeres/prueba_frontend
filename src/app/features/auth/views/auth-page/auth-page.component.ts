@@ -76,10 +76,20 @@ export class AuthPageComponent implements OnInit {
       };
 
       this.authService.register(user).subscribe({
-        next: (res) => {
-          console.log('Usuario registrado', res);
-          this.isLoading = false
-        },
+      next: (res) => {
+        console.log('Usuario registrado', res);
+
+        this.authService.login({ email, password }).subscribe({
+          next: (loginRes) => {
+            console.log('Login exitoso', loginRes);
+            this.router.navigate(['/inventory']);
+          },
+          error: (loginErr) => {
+            console.error('Error en login', loginErr);
+            this.isLoading = false;
+          },
+        });
+      },
         error: (err) => {
           console.error('Error en registro', err);
           this.isLoading = false

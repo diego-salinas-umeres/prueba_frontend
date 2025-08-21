@@ -1,6 +1,7 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CategoryCreateRequest } from '../../core/models/category.model';
 
 @Component({
   selector: 'app-create-category-modal',
@@ -11,27 +12,34 @@ import { CommonModule } from '@angular/common';
 })
 export class CreateCategoryModalComponent {
 
-    @Output() closed = new EventEmitter<void>();
+  @Output() createCategoryEvent = new EventEmitter<CategoryCreateRequest>();
+  @Output() closed = new EventEmitter<void>();
+
+  createCategoryForm!: FormGroup;
   
-    createProductForm!: FormGroup
-  
-    constructor(
-      private fb: FormBuilder
-    ) { }
-  
-    ngOnInit(): void {
-      this.createProductForm = this.fb.group({
-        name: [null, Validators.required],
-        code: [null]
-      })
+  constructor(
+    private fb: FormBuilder
+  ) { }
+
+  ngOnInit(): void {
+    this.createCategoryForm = this.fb.group({
+      name: [null, Validators.required],
+    })
+  }
+
+  close() {
+    this.closed.emit();
+  }
+
+  onSubmit() {
+    const formValues = this.createCategoryForm.value;
+
+    const newCategory: CategoryCreateRequest = {
+      name: formValues.name,
     }
-  
-    close() {
-      this.closed.emit();
-    }
-  
-    onSubmit() {
-  
-    }
+
+    this.createCategoryEvent.emit(newCategory);
+    this.close();
+  }
 
 }
