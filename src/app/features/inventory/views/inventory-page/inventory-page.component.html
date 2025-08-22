@@ -3,8 +3,7 @@
         Agregar Producto
     </button>
     <button class="btn btn-primary"
-    (click)="openCreateCategoryModal()"
-    >
+        (click)="openCreateCategoryModal()">
         Agregar Categoría
     </button>
 </div>
@@ -32,7 +31,8 @@
         </div>
 
         <div class="filters-actions">
-            <button type="submit" class="btn btn-primary">Aplicar
+            <button [disabled]="isLoadingProducts" type="submit"
+                class="btn btn-primary">Aplicar
                 Filtros</button>
         </div>
     </div>
@@ -41,7 +41,7 @@
 <div class="pagination-controls mt-3">
     <button class="btn btn-secondary me-2"
         (click)="prevPage()"
-        [disabled]="currentPage === 0">
+        [disabled]="currentPage === 0 || isLoadingProducts">
         Anterior
     </button>
 
@@ -49,11 +49,12 @@
 
     <button class="btn btn-secondary ms-2"
         (click)="nextPage()"
-        [disabled]="currentPage + 1 >= totalPages">
+        [disabled]="currentPage + 1 >= totalPages || isLoadingProducts">
         Siguiente
     </button>
 </div>
 <div class="table-container no-scrollbar">
+
     <table class="table">
         <thead>
             <tr>
@@ -64,12 +65,24 @@
                 <th>Acciones</th>
             </tr>
         </thead>
+
         <tbody class="table-body">
-            <tr *ngFor="let product of products">
+
+            <tr *ngIf="isLoadingProducts">
+                <td colspan="10" class="loading-cell">
+                    <div class="loading-container">
+                        <div class="spinner"></div>
+                        <p>Cargando productos...</p>
+                    </div>
+                </td>
+            </tr>
+
+            <ng-container *ngIf="!isLoadingProducts">
+            <tr *ngFor="let product of products" [class.hidden]="isLoadingProducts">
                 <td>{{ product.name }}</td>
                 <td>{{ product.quantity}}</td>
                 <td>{{ product.categoryName }}</td>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price | number:'1.2-2' }}</td>
                 <td class="actions-cell">
                     <button type="button" class="action-btn btn-view"
                         title="Ver detalles">
@@ -80,15 +93,18 @@
                                 d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </button>
-                    <button *appAdminOnly type="button" class="action-btn btn-edit"
-                        title="Editar">
+                    <button *appAdminOnly type="button"
+                        class="action-btn btn-edit"
+                        title="Editar" (click)="handleEditBtn(product)">
                         <svg width="16" height="16" fill="currentColor"
                             viewBox="0 0 20 20">
                             <path
                                 d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                         </svg>
                     </button>
-                    <button *appAdminOnly type="button" class="action-btn btn-disable"
+                    <button *appAdminOnly type="button"
+                        (click)="handleDeleteBtn(product)"
+                        class="action-btn btn-disable"
                         title="Deshabilitar">
                         <svg width="16" height="16" fill="currentColor"
                             viewBox="0 0 24 24">
@@ -108,6 +124,7 @@
                     </button>
                 </td>
             </tr>
+            </ng-container>
         </tbody>
     </table>
 </div>
@@ -122,8 +139,22 @@
 <app-create-category-modal
     *ngIf="isCreateCategoryModalOpen"
     (closed)="isCreateCategoryModalOpen = false"
-    (createCategoryEvent)="createCategory($event)"
-    >
-    
-
+    (createCategoryEvent)="createCategory($event)">
 </app-create-category-modal>
+
+<app-edit-product-modal
+    *ngIf="isEditProducModalOpen"
+    (closed)="isEditProducModalOpen = false"
+    (updateProductEvent)="updateProduct($event)"
+    [productToUpdate]="this.productToUpdate"
+    [categories]="this.categories">
+</app-edit-product-modal>
+
+<app-delete-confirmation-modal
+    *ngIf="isDeleteModalOpen"
+    [productId]="productToDelete.id"
+    [productName]="productToDelete.name"
+    (closed)="isDeleteModalOpen = false"
+    (deleteProductEvent)="deleteProduct($event)">
+
+</app-delete-confirmation-modal>
