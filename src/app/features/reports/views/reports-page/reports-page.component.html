@@ -1,1 +1,14 @@
-<p>reports-page works!</p>
+<div class="content">
+
+    <div class="report-card">
+        <div class="report-icon">⚠️</div>
+        <h2>Productos con Stock Bajo</h2>
+        <p>Productos que requieren reabastecimiento inmediato</p>
+        <p>Stock menor a 5 unidades</p>
+        <button class="btn-generate" (click)="generateReport()">
+            <span *ngIf="isGeneratingReport">Generando...</span>
+            <span *ngIf="!isGeneratingReport">Descargar Reporte</span>
+        </button>
+    </div>
+
+</div>

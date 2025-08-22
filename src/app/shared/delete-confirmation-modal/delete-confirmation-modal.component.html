@@ -1,0 +1,18 @@
+<div class="modal-overlay">
+    <div class="modal">
+        <h2>Confirmar Eliminación</h2>
+        <div class="modal-content">
+            <p>¿Estás seguro de que quieres eliminar el producto <strong>"{{ productName }}"</strong>?</p>
+            <p class="warning-text">Esta acción no se puede deshacer.</p>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+                Eliminar
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="close()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
