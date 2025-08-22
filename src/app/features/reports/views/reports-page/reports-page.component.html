@@ -1,88 +1,14 @@
 <div class="content">
-    <div class="report-info">
-        <p><strong>Último reporte generado:</strong> 20 de agosto de 2025 a las
-            10:30 AM | <strong>Reportes generados este mes:</strong> 12</p>
-    </div>
 
     <div class="report-card">
         <div class="report-icon">⚠️</div>
         <h2>Productos con Stock Bajo</h2>
         <p>Productos que requieren reabastecimiento inmediato</p>
         <p>Stock menor a 5 unidades</p>
-        <div class="alert-count">5 productos requieren atención</div>
-        <button class="btn-generate" onclick="generateReport()">
-            📄 Generar Reporte PDF
+        <button class="btn-generate" (click)="generateReport()">
+            <span *ngIf="isGeneratingReport">Generando...</span>
+            <span *ngIf="!isGeneratingReport">Descargar Reporte</span>
         </button>
-        <div class="success-message" id="successMessage">
-            ✅ Reporte generado exitosamente y descargado
-        </div>
     </div>
 
-    <div class="loading" id="loadingState">
-        <div class="loading-spinner"></div>
-        <p>Generando reporte PDF...</p>
-    </div>
-
-    <div class="products-section">
-        <div class="products-header">
-            <h3>Productos con Stock Bajo</h3>
-            <p>Lista de productos que serán incluidos en el reporte</p>
-        </div>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre del Producto</th>
-                        <th>Categoría</th>
-                        <th>Stock Actual</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="stock-critical">
-                        <td>002</td>
-                        <td>Samsung Galaxy S24</td>
-                        <td>Electrónicos</td>
-                        <td><strong>0</strong></td>
-                        <td><span class="status-badge status-critical">Sin
-                                Stock</span></td>
-                    </tr>
-                    <tr class="stock-low">
-                        <td>004</td>
-                        <td>Nike Air Max</td>
-                        <td>Deportes</td>
-                        <td><strong>2</strong></td>
-                        <td><span class="status-badge status-low">Stock
-                                Bajo</span></td>
-                    </tr>
-                    <tr class="stock-low">
-                        <td>007</td>
-                        <td>Auriculares Bluetooth</td>
-                        <td>Electrónicos</td>
-                        <td><strong>3</strong></td>
-                        <td><span class="status-badge status-low">Stock
-                                Bajo</span></td>
-                    </tr>
-                    <tr class="stock-low">
-                        <td>012</td>
-                        <td>Camiseta Básica</td>
-                        <td>Ropa</td>
-                        <td><strong>4</strong></td>
-                        <td><span class="status-badge status-low">Stock
-                                Bajo</span></td>
-                    </tr>
-                    <tr class="stock-low">
-                        <td>018</td>
-                        <td>Lámpara de Mesa</td>
-                        <td>Hogar</td>
-                        <td><strong>1</strong></td>
-                        <td><span class="status-badge status-low">Stock
-                                Bajo</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>

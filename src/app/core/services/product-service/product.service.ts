@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProductPageResponse } from '../../models/product.model';
 import { ProductCreateRequest, ProductResponse, ProductUpdateRequest } from '../../models/product.model';
@@ -50,5 +50,14 @@ export class ProductService {
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  generateLowStockReport(): Observable<Blob> {
+  return this.http.get(`${this.baseUrl}/low-stock-report`, {
+    responseType: 'blob',
+    headers: new HttpHeaders({
+      'Accept': 'application/pdf'
+    })
+  });
+}
 
 }

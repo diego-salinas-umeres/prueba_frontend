@@ -17,15 +17,23 @@ export class HeaderComponent {
   currentDate: string = '';
 
   ngOnInit(): void {
+    // Obtener título inicial al cargar la página
+    this.setCurrentTitle();
+
+    // Escuchar cambios de navegación
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        const childRoute = this.getDeepestChild(this.activatedRoute);
-        const routeTitle = childRoute.snapshot.data?.['title'];
-        this.currentTitle = routeTitle ?? 'Sin título';
+        this.setCurrentTitle();
       });
 
     this.updateDate();
+  }
+
+  private setCurrentTitle(): void {
+    const childRoute = this.getDeepestChild(this.activatedRoute);
+    const routeTitle = childRoute.snapshot.data?.['title'];
+    this.currentTitle = routeTitle ?? 'Sin título';
   }
 
   private getDeepestChild(route: ActivatedRoute): ActivatedRoute {
